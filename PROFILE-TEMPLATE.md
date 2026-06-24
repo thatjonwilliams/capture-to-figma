@@ -6,7 +6,9 @@ a fully autonomous run.
 
 ## Basics
 - **App URL:** `http://localhost:<PORT>`  (or external `https://…`)
-- **Destination Figma file:** `https://www.figma.com/design/<fileKey>/<name>`
+- **Destination Figma file:** `https://www.figma.com/design/<fileKey>/<name>?node-id=<NODE>`
+- **Placement target:** the `<NODE>` above = the page/section to append every capture under (so they land
+  where you're looking, not on scattered new pages). Leave blank to create a fresh container page.
 - **Auth:** none | dev-bypass | login required (if login required, give the steps or use a pre-authed browser)
 
 ## Routes (user-facing screens to capture)

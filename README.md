@@ -14,14 +14,19 @@ Profile**, so the same engine works across static sites, SPAs, SSR apps, and aut
 - Warms the backend if the app has one that cold-starts.
 - For each screen × theme (× state × breakpoint): waits for content, injects Figma's capture script, fires
   the capture, and polls until the editable frame lands in your file.
+- **Appends every capture under the destination `node-id` you point it at** (the page/section in your Figma
+  URL), so the screens land where you're looking — not scattered across new auto-created pages.
 - Captures empty states, and optionally seeds sample data (with consent) for populated/detail screens.
-- Titles every frame and its page, deletes stray/empty frames, and reports a table of Figma links.
+- Titles + places each frame as it lands, deletes stray/empty frames, and reports a table of Figma links.
 
 ## Requirements
 - **A Figma MCP server** connected in your agent, exposing `generate_figma_design`, `use_figma`,
   `get_metadata`, `get_screenshot` (the official Figma MCP). You complete its OAuth once.
-- **A browser you can drive**: an agent browser-control MCP (for local apps — to inject the capture script)
-  and/or **Playwright MCP** (required for external/public URLs, to bypass CSP).
+- **A browser you can drive**: an agent browser-control MCP **or Playwright MCP** (either drives a local app;
+  Playwright is required for external/public URLs, to bypass CSP).
+- A **permission mode that allows injecting the capture script** — loading Figma's `capture.js` into the page
+  is the core mechanism, and strict/auto modes deny it as "remote code." Use interactive approval or a
+  pre-added allow rule.
 - A **Figma `/design/` file** editable by the connected Figma account.
 - The web app **running** at a URL you provide.
 
@@ -29,7 +34,7 @@ Profile**, so the same engine works across static sites, SPAs, SSR apps, and aut
 Copy this folder into your agent's skills directory, e.g.:
 
 ```
-~/.claude/skills/web-to-figma/
+~/.claude/skills/capture-to-figma/
 ```
 
 (or wherever your agent loads skills from). The skill is self-contained: `SKILL.md` is the workflow,
